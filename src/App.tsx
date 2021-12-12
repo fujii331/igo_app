@@ -2,10 +2,13 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  // 初期値の値のリストを定義
+  // : number[]とすることでnumber型のリストと型を明示できる
   const valueList: number[] = [];
 
   // listに全て0で詰める
   for (let i = 0; i < 25; i++) {
+    // pushはリストに値を詰める
     valueList.push(0);
   }
 
@@ -13,14 +16,17 @@ function App() {
   // console.log(valueList)
   // console.log(valueList.length)
 
+  // useStateで、値が動的に変化するものを定義
   const [valueListState, setValueList] = useState(valueList);
 
+  // 表示するリストを定義
   const display = [];
 
-  // 指定した範囲のランダムな数字を取得する
+  // 指定した範囲のランダムな数字を取得する処理を定義
   const randRange = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
+  // ライバルの行動を定義
   function rivalTurn(valueListAfterMyTurn: number[]) {
     let randomValue = randRange(0, 24);
 
@@ -33,6 +39,7 @@ function App() {
       count++;
     }
 
+    // mapはlistの中身を一個一個取り出して新たなlistを作る
     const updatedRivalValueList = valueListAfterMyTurn.map((value, key) => {
       if (key === randomValue) {
         return 2;
@@ -45,6 +52,7 @@ function App() {
     setValueList(updatedRivalValueList);
   }
 
+  // ループを行なってテーブルの中身を追加していく
   for (let i = 1; i <= 5; i++) {
     display.push(
       <tr>
